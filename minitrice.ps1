@@ -28,7 +28,7 @@ Write-Host "Minitrice - tapez Ctrl+D pour quitter"
 while ($true) {
     try {
         $expression = Read-Host "> "
-        if ($expression -eq $null) { break }
+        if ($null -eq $expression) { break }
         Calculer $expression
     } catch {
         break
