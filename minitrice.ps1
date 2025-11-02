@@ -27,8 +27,9 @@ function Calculer {
 Write-Host "Minitrice - tapez Ctrl+D pour quitter"
 while ($true) {
     try {
-        $expression = Read-Host "> "
-        if ($null -eq $expression) { break }
+    $expression = Read-Host "> "
+    # Consider empty, whitespace-only or null input as request to quit
+    if ([string]::IsNullOrWhiteSpace($expression)) { break }
         Calculer $expression
     } catch {
         break
