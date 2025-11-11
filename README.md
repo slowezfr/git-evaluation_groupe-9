@@ -8,8 +8,6 @@
 - [Publication (optionnel)](#publication-optionnel)
 - [Références / Liens utiles](#références--liens-utiles)
 
----
-
 ## ⚙️ Installation
 git clone https://github.com/slowezfr/git-evaluation_groupe-9.git
 cd git-evaluation_groupe-9
@@ -17,8 +15,6 @@ cd git-evaluation_groupe-9
 ### Prérequis
 - PowerShell installé (Windows 10/11 ou via WSL/Linux).
 - Aucun package externe requis.
-
----
 
 ## ▶️ Exécution
 
@@ -40,8 +36,6 @@ Get-Content .\test\01-division.txt | .\minitrice.ps1 > .\results\01-division-res
 ### Avec generator
 .\generator.ps1 2 | .\minitrice.ps1  
 
----
-
 ## 📂 Structure du dépôt
 git-evaluation_groupe-9/  
 ├── generator.ps1  
@@ -54,20 +48,11 @@ git-evaluation_groupe-9/
     ├── 00-addition.txt  
     └── 01-division.txt  
 
----
-
 ## 💡 Remarques
 - Projet réalisé en PowerShell.  
 - Gestion des erreurs incluse (syntaxe invalide, division par zéro).  
 - Résultats arrondis à 2 décimales si nécessaire.  
 - Workflow GitFlow respecté (branches `feature/...`, merge dans `main`).  
-
----
-
-## 🎥 Publication (optionnel)
-Lien YouTube de la vidéo Gource (si réalisée) : *(à compléter si vous avez généré la vidéo)*  
-
----
 
 ## 📚 Références / Liens utiles
 - [Introduction à PowerShell – Microsoft Learn](https://learn.microsoft.com/fr-fr/powershell/scripting/overview)  
