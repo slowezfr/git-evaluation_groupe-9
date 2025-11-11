@@ -1,39 +1,46 @@
 # minitrice.ps1
-# Petit calculateur PowerShell (Minitrice)
-# Mode interactif, pipe ou fichier
+# Lit l'entrée standard ligne par ligne et calcule les résultats
 
-function Calculer {
-    param([string]$expression)
+# Vérifie si on reçoit quelque chose du pipeline
+if (-not [Console]::KeyAvailable) {
+    while ($line = [Console]::In.ReadLine()) {
+        if ($line -eq $null) { break }
+        $line = $line.Trim()
+        if ($line -eq "") { continue }
 
-    try {
-        if ($expression -match "/0") {
-            Write-Error "Division par zéro"
+        try {
+            if ($line -match "/0") {
+                Write-Output "Division par zéro"
+                exit 1
+            }
+            $result = Invoke-Expression $line
+            # Arrondit à 2 décimales si nécessaire
+            "{0:N2}" -f $result
+        } catch {
+            Write-Output "Erreur de syntaxe pour le calcul: '$line'"
             exit 1
         }
+    }
+} else {
+    # Mode interactif si rien n'est envoyé par pipeline
+    Write-Output "Minitrice - tapez Ctrl+D pour quitter"
+    while ($true) {
+        $line = Read-Host "> "
+        if ($line -eq $null) { break }
+        $line = $line.Trim()
+        if ($line -eq "") { continue }
 
-        $resultat = Invoke-Expression $expression
-        if ($resultat -is [double]) {
-            "{0:N2}" -f $resultat
-        } else {
-            $resultat
+        try {
+            if ($line -match "/0") {
+                Write-Output "Division par zéro"
+                continue
+            }
+            $result = Invoke-Expression $line
+            "{0:N2}" -f $result
+        } catch {
+            Write-Output "Erreur de syntaxe pour le calcul: '$line'"
         }
-    } catch {
-        Write-Error "Erreur de syntaxe"
-        exit 1
     }
 }
-
-# Sinon mode interactif
-Write-Host "Minitrice - tapez Ctrl+D pour quitter"
-while ($true) {
-    try {
-    $expression = Read-Host "> "
-    # Consider empty, whitespace-only or null input as request to quit
-    if ([string]::IsNullOrWhiteSpace($expression)) { break }
-        Calculer $expression
-    } catch {
-        break
-    }
-}
-Write-Host "Fin des calculs"
+Write-Output "Fin des calculs"
 exit 0
